@@ -1,9 +1,16 @@
 import DATA, { backgroundColor, borderColor } from "./dummy_data.js"
 
+/**
+ * extract the chart labels from our DATA
+ * @return {Array} chart labels
+ */
 function getGraphLabels() {
 	return DATA.map((value) => value.period)
 }
-
+/**
+ * add the total to the data
+ * @return {Array} our data with total attribute added
+ */
 function addTotalToDATA() {
 	return DATA.map((value) => {
 		let total = Object.keys(value).filter((key) => key !== "period").length
@@ -14,10 +21,22 @@ function addTotalToDATA() {
 	})
 }
 
+/**
+ * filter our data and extract the main entities
+ * @param {Object} obj item from our data
+ * @param {String} filter the excluded attribute
+ * @return {Array} array of the main entities of the chart
+ */
 function filterKeys(obj, filter) {
 	return Object.keys(obj).filter((key) => key !== filter)
 }
 
+/**
+ * create the dataset item
+ * @param {String} label dataset item label
+ * @param {Array} data
+ * @return {Object} dataset item
+ */
 function generateDatasetItem(label, data) {
 	return {
 		label,
@@ -29,6 +48,10 @@ function generateDatasetItem(label, data) {
 	}
 }
 
+/**
+ * generate the chart datasets from the provided data
+ * @return {Array} the chart datasets
+ */
 function generateDatasets() {
 	const dataWithTotal = addTotalToDATA()
 	const filteredKeys = filterKeys(dataWithTotal[0], "period")
@@ -36,6 +59,10 @@ function generateDatasets() {
 	return datasets
 }
 
+/**
+ * generate the chart config data containing the datasets and labels
+ * @return {Object}
+ */
 function generateGraphData() {
 	const labels = getGraphLabels()
 	const datasets = generateDatasets()
@@ -45,6 +72,10 @@ function generateGraphData() {
 	}
 }
 
+/**
+ * create the chart
+ * @return {Chart} our chart with the data provided
+ */
 export function generateGraph(context) {
 	const data = generateGraphData()
 	return new Chart(context, {
