@@ -10,8 +10,11 @@ function getGraphLabels() {
 /**
  * add the total to the data
  * @return {Array} our data with total attribute added
+ * @note in the provided data all the item has 4 attributes exclude the period and we have 3 for all the data
+ * i kept this function in case we added new sets to the data and they have more than 4 attributes
  */
 function addTotalToDATA() {
+	// map the provided data and calculate the total attribute and add it the new array
 	return DATA.map((value) => {
 		let total = Object.keys(value).filter((key) => key !== "period").length
 		return {
